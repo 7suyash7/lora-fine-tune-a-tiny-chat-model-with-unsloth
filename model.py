@@ -88,8 +88,27 @@ def count_trainable_parameters(model):
 def trainable_fraction(trainable_count, total_count):
     return float(trainable_count) / float(total_count)
 
-# Step 9 - build_instruction_examples (not yet solved)
-# TODO: implement
+# Step 9 - build_instruction_examples
+def build_instruction_examples():
+    """Return a small list of {'instruction', 'response'} dicts for SFT."""
+    return [
+        {
+            "instruction": "Say hello in one short sentence.",
+            "response": "Hello! I hope you're having a great day.",
+        },
+        {
+            "instruction": "Explain LoRA in one sentence.",
+            "response": "LoRA fine-tunes a model by training small adapter weights while keeping the base model mostly frozen.",
+        },
+        {
+            "instruction": "What is 2 plus 2?",
+            "response": "2 plus 2 is 4.",
+        },
+        {
+            "instruction": "Give one benefit of 4-bit quantization.",
+            "response": "4-bit quantization reduces memory usage so larger models can fit on smaller GPUs.",
+        },
+    ]
 
 # Step 10 - format_instruction_example (not yet solved)
 # TODO: implement
