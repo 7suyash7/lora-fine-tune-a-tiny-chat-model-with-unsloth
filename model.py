@@ -215,6 +215,27 @@ def build_chat_prompt(tokenizer, instruction):
         add_generation_prompt=True
     )
 
-# Step 20 - generate_reply (not yet solved)
-# TODO: implement
+# Step 20 - generate_reply
+import torch
+
+def generate_reply(model, tokenizer, prompt, max_new_tokens=32):
+    """Greedy-generate a reply for `prompt` and return the decoded text."""
+    inputs = tokenizer(prompt, return_tensors="pt")
+
+    device = next(model.parameters()).device
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+        )
+    
+    prompt_length = inputs["input_ids"].shape[1]
+    new_tokens = outputs[0][prompt_length:]
+
+    reply = tokenizer.decode(new_tokens, skip_special_tokens=True)
+
+    return reply.strip()
 
